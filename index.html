@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kredit Mobil</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .carousel-item img {
+      max-height: 350px;   /* tinggi slider dibatasi */
+      object-fit: cover;   /* biar gambar tetap proporsional */
+    }
+    main {
+      flex: 1; /* konten utama supaya dorong footer ke bawah */
+    }
+    footer {
+      background: #212529;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+    }
+  </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">Logo</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="#">Beranda</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Tentang</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Kontak</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <!-- Slider -->
+  <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="image1.jpg" class="d-block w-100">
+      </div>
+      <div class="carousel-item">
+        <img src="image1.jpg" class="d-block w-100">
+      </div>
+      <div class="carousel-item">
+        <img src="image1.jpg" class="d-block w-100">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+  <!-- Form -->
+  <div class="container my-5">
+    <h3 class="text-center mb-4">Hitung Kredit Mobil</h3>
+    <form id="kreditForm" class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label">Harga Mobil</label>
+        <input type="number" id="harga" class="form-control" required>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">DP (%)</label>
+        <input type="number" id="dp" class="form-control" required>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Tenor (Tahun)</label>
+        <input type="number" id="tenor" class="form-control" required>
+      </div>
+      <div class="col-12 text-center">
+        <button type="submit" class="btn btn-primary">Hitung</button>
+      </div>
+    </form>
+
+    <div id="hasil" class="alert alert-success mt-4 d-none"></div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer>
+  <p class="mb-0">&copy; 2025 Perusahaan Kredit Mobil | All Rights Reserved</p>
+</footer>
+
+<script>
+document.getElementById("kreditForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  let harga = parseFloat(document.getElementById("harga").value);
+  let dp = parseFloat(document.getElementById("dp").value);
+  let tenor = parseFloat(document.getElementById("tenor").value);
+
+  let bunga = 0.2 * harga;
+  let total = harga + bunga;
+  let dpNominal = (dp/100) * harga;
+  let bulan = tenor * 12;
+  let angsuran = (total - dpNominal) / bulan;
+
+  document.getElementById("hasil").classList.remove("d-none");
+  document.getElementById("hasil").innerHTML = `
+    <h5>Hasil Perhitungan:</h5>
+    <p>Harga Mobil: Rp ${harga.toLocaleString()}</p>
+    <p>DP: ${dp}% (Rp ${dpNominal.toLocaleString()})</p>
+    <p>Tenor: ${tenor} Tahun (${bulan} bulan)</p>
+    <p>Bunga 20%: Rp ${bunga.toLocaleString()}</p>
+    <p><strong>Angsuran per bulan: Rp ${angsuran.toLocaleString()}</strong></p>
+  `;
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
